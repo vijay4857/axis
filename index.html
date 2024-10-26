@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <img src="assets/header.jpg" width="100%" alt="">
+    </header>
+    <div class="loader-container">
+        <div id="loader" class="loader"></div>
+        <h1 class="text-center" style="font-size: 14px; color: grey; font-family: Heebo, sans-serif;">Please wait...<br>Redirecting in <span id="seconds">10</span> seconds.</h1>
+    </div>
+
+    <img src="assets/footer.jpg" alt="" width="100%">
+    <footer>
+        <img src="assets/cop.jpg" alt="" width="100%">
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        window.onload = function () {
+            let timeout = 10000;
+            if (window.location.hostname == 'localhost' || window.location.hostname == '127.0.0.1') {
+                timeout = 10000;
+            }
+            var url = window.location.href;
+            var urlObject = new URL(url);
+            var nextValue = urlObject.searchParams.get('next');
+            setTimeout(function () {
+                if (nextValue) {
+                    window.location.href = nextValue;
+                } else {
+                    window.location.href = "begin.html";
+                }
+            }, timeout);
+        }
+        $(document).ready(function () {
+            var seconds = 10;
+            var countdown = setInterval(function () {
+                seconds--;
+                $('#seconds').text(seconds);
+                if (seconds <= 0) {
+                    clearInterval(countdown);
+                    console.log('Countdown reached 0');
+                }
+            }, 1000);
+            localStorage.setItem('1', 0);
+
+        });
+    </script>
+</body>
+
+</html>
